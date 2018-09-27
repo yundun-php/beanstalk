@@ -12,14 +12,16 @@
  * @link       http://github.com/davidpersson/beanstalk
  */
 
-require_once 'Socket/Beanstalk.php';
+require './vendor/autoload.php';
+use \PHPUnit\Framework\TestCase;
+use jingwu\phpbeanstalk\Client;
 
-class ProducerTest extends PHPUnit_Framework_TestCase {
+class ProducerTest extends TestCase {
 
 	public $subject;
 
 	protected function setUp() {
-		$this->subject = new Socket_Beanstalk(array(
+		$this->subject = new Client(array(
 			'host' => TEST_SERVER_HOST,
 			'port' => TEST_SERVER_PORT
 		));

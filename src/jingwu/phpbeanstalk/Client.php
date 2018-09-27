@@ -1,5 +1,6 @@
 <?php
-namespace jingwu15/beanstalk/client
+namespace jingwu\phpbeanstalk;
+
 /**
  * beanstalk: A minimalistic PHP beanstalk client.
  *

@@ -1,0 +1,19 @@
+{
+    "name": "jingwu15/beanstalk",
+    "description": "beanstalkd轻量级的PHP客户端.",
+    "keywords": ["queue", "socket", "beanstalk"],
+    "homepage": "https://github.com/davidpersson/beanstalk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jingwu",
+            "email": "jingwu@vip.163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.1"
+    },
+    "autoload": {
+        "psr-0": { "Client": "src/" }
+    }
+}

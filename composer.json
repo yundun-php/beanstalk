@@ -1,8 +1,8 @@
 {
-    "name": "jingwu15/beanstalk",
+    "name": "jingwu/phpbeanstalk",
     "description": "beanstalkd轻量级的PHP客户端.",
     "keywords": ["queue", "socket", "beanstalk"],
-    "homepage": "https://github.com/davidpersson/beanstalk",
+    "homepage": "https://github.com/jingwu15/phpbeanstalk.git",
     "license": "MIT",
     "authors": [
         {

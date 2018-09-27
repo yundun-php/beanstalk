@@ -144,6 +144,17 @@ class Client {
 	}
 
 	/**
+	 * reset the connection to the beanstalk server.
+	 * @return boolean true/false
+	 */
+    public function reconnect() {
+        $this->disconnect();
+        $this->connect();
+        $stats = $this->stats();
+        return $stats === false ? false : true;
+    }
+
+	/**
 	 * Returns collected error messages.
 	 *
 	 * @return array An array of error messages.

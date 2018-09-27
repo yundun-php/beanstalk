@@ -290,6 +290,28 @@ class Client {
 		return $this->choose($tube);
 	}
 
+    /**
+     * useTube and put
+	 *
+	 * @param string $tube
+	 * @param integer $pri Jobs with smaller priority values will be scheduled
+	 *        before jobs with larger priorities. The most urgent priority is
+	 *        0; the least urgent priority is 4294967295.
+	 * @param integer $delay Seconds to wait before putting the job in the
+	 *        ready queue.  The job will be in the "delayed" state during this time.
+	 * @param integer $ttr Time to run - Number of seconds to allow a worker to
+	 *        run this job.  The minimum ttr is 1.
+	 * @param string $data The job body.
+	 * @return integer|boolean `false` on error otherwise an integer indicating
+	 *         the job id.
+     */
+    public function usePut($tube, $data, $pri=0, $delay=0, $ttr=30) {
+        $result = $this->useTube($tube);
+        if($result === false) return false;
+        $jobId = $this->put($pri, $delay, $ttr, $data);
+        return $jobId;
+    }
+
 	/* Worker Commands */
 
 	/**

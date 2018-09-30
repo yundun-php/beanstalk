@@ -11,9 +11,9 @@
         }
     ],
     "autoload": {
-        "classmap": [
-            "src/"
-        ]
+        "psr-4": {
+            "jingwu\\": "src/"
+        }
     },
     "require": {
         "php": ">=5.2.1"

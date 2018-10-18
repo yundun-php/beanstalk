@@ -12,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Jingwu\\": "src/"
+            "Jingwu\\PhpBeanstalk\\": "src/phpbeanstalk/"
         }
     },
     "require": {

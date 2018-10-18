@@ -15,7 +15,7 @@
 //require_once '../src/Socket/Beanstalk.php';
 //require_once './src/Socket/Client.php';
 require './vendor/autoload.php';
-use jingwu15\beanstalk\Client;
+use Jingwu\PhpBeanstalk\Client;
 
 /**
  * A small benchmark to test throughput.

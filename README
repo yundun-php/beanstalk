@@ -39,7 +39,7 @@ Add ``jingwu/phpbeanstalk`` as a dependency in your project's ``composer.json`` 
 
 <?php
 require 'vendor/autoload.php';
-use jingwu\phpbeanstalk\Client;
+use Jingwu\PhpBeanstalk\Client;
 
 // A sample producer.
 $client = new Client(); // For connection options see the class documentation.

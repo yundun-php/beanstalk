@@ -12,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "jingwu\\": "src/"
+            "Jingwu\\": "src/"
         }
     },
     "require": {

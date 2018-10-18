@@ -14,7 +14,7 @@
 
 require './vendor/autoload.php';
 use \PHPUnit\Framework\TestCase;
-use jingwu\phpbeanstalk\Client;
+use Jingwu\PhpBeanstalk\Client;
 
 class ConnectTest extends TestCase {
 

@@ -7,8 +7,11 @@
 		</testsuite>
 	</testsuites>
 	<php>
-		<const name="TEST_EXECUTION" value="true" />
-		<const name="TEST_SERVER_HOST" value="127.0.0.1" />
-		<const name="TEST_SERVER_PORT" value="11300" />
+		<const name="TEST_EXECUTION"        value="true" />
+        <const name="TEST_SERVER_HOST"      value="127.0.0.1" />
+		<const name="TEST_SERVER_PORT"      value="11300" />
+		<const name="TEST_CONNECT_TIMEOUT"  value="1" />
+		<const name="TEST_STREAM_TIMEOUT"   value="1" />
+		<const name="TEST_TUBE"             value="tester" />
 	</php>
 </phpunit>

@@ -337,7 +337,7 @@ class Client {
      *        use.  If the tube does not exist, it will be created.
      * @return string|boolean `false` on error otherwise the name of the tube.
      */
-    public function choose($tube) {
+    public function use($tube) {
         $this->_write(sprintf('use %s', $tube));
         $status = strtok($this->_read(), ' ');
 
@@ -351,6 +351,10 @@ class Client {
         }
     }
 
+    public function choose($tube) {
+        return $this->use($tube);
+    }
+
     /**
      * Alias for choose.
      *
@@ -359,7 +363,7 @@ class Client {
      * @return string|boolean
      */
     public function useTube($tube) {
-        return $this->choose($tube);
+        return $this->use($tube);
     }
 
     /**

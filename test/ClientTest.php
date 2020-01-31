@@ -56,7 +56,7 @@ class ClientTest extends TestCase {
 	}
 
     public function testPut() {
-        $result = $this->client->useTube(TEST_TUBE);
+        $result = $this->client->use(TEST_TUBE);
 		$this->assertEquals($result, TEST_TUBE);
 
         $body = json_encode(['name' => 'tester', 'ctime' => date('Y-m-d H:i:s')]);
@@ -117,7 +117,7 @@ class ClientTest extends TestCase {
 
     public function testList() {
         $result = $this->client->watch(TEST_TUBE);
-        $result = $this->client->useTube(TEST_TUBE);
+        $result = $this->client->use(TEST_TUBE);
 
         $result = $this->client->listTubes();
         $this->assertContains(TEST_TUBE, $result);

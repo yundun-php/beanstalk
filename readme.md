@@ -39,6 +39,7 @@ Add ``jingwu/phpbeanstalk`` as a dependency in your project's ``composer.json`` 
     }
 ```
 
+```
 <?php
 require 'vendor/autoload.php';
 use Jingwu\PhpBeanstalk\Client;
@@ -95,6 +96,7 @@ while(true) {
 // $client->disconnect();
 
 ?>
+```
 
 单元测试
 -----------------

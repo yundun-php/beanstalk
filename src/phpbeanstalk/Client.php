@@ -76,7 +76,7 @@ class Client {
      *        - `'persistent'`  是否启用长链接， 默认 true
      *        - `'host'`        服务器IP，默认 127.0.0.1
      *        - `'port'`        服务端口, 默认 11300
-     *        - `'connect_timeout'` 建立连接超时设置
+     *        - `'timeout'`     建立连接超时设置
      *                  0 不设限制, 走系统默认配置
      *                  1 默认
      *        - `'stream_timeout'`  数据流超时设置
@@ -91,17 +91,17 @@ class Client {
      */
     public function __construct(array $config = array()) {
         $default = array(
-            'persistent' => true,
-            'host' => '127.0.0.1',
-            'port' => 11300,
-            'connect_timeout' => 1,
-            'stream_timeout' => 1,
+            'persistent'            => true,
+            'host'                  => '127.0.0.1',
+            'port'                  => 11300,
+            'timeout'               => 1,
+            'stream_timeout'        => 1,
             'force_reserve_timeout' => 1,
         );
         $this->_config = $config + $default;
         //超时设置一定要有，否则网络不好时，程序会僵死, 此处由调用者设置
-        $connectTimeout = intval($this->_config['connect_timeout']);
-        $streamTimeout  = intval($this->_config['stream_timeout']);
+        $this->_config['timeout']        = intval($this->_config['timeout']);
+        $this->_config['stream_timeout'] = intval($this->_config['stream_timeout']);
     }
 
     /**
@@ -131,8 +131,8 @@ class Client {
         $function = $this->_config['persistent'] ? 'pfsockopen' : 'fsockopen';
         $params = array($this->_config['host'], $this->_config['port'], &$errNum, &$errStr);
 
-        if ($this->_config['connect_timeout']) {
-            $params[] = $this->_config['connect_timeout'];
+        if ($this->_config['timeout']) {
+            $params[] = $this->_config['timeout'];
         }
         $this->_connection = @call_user_func_array($function, $params);
 

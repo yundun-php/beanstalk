@@ -48,7 +48,7 @@ $cfg = [
     'persistent' => true, 
     'host' => '127.0.0.1', 
     'port' => 11300, 
-    'connect_timeout' => 1,         //连接超时设置
+    'timeout' => 1,                 //连接超时设置
     'stream_timeout' => 1,          //数据流超时设置
     'force_reserve_timeout' => 1,   //强制 reserve 设置超时，默认1秒
 ];

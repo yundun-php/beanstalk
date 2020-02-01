@@ -25,7 +25,7 @@ class ClientTest extends TestCase {
             'persistent'      => true,
 			'host'            => TEST_SERVER_HOST,
 			'port'            => TEST_SERVER_PORT,
-            'connect_timeout' => TEST_CONNECT_TIMEOUT,
+            'timeout'         => TEST_TIMEOUT,
             'stream_timeout'  => TEST_STREAM_TIMEOUT,
 		));
 		if (!$this->client->connect()) {

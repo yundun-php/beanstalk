@@ -79,19 +79,19 @@ function test_sleepPut($cfg, $tube, $msgCount, $msgLen, $i = 0) {
     }
 }
 
-$cfg = ['persistent' => true, 'host' => '127.0.0.1', 'port' => 11300, 'connect_timeout' => 1, 'stream_timeout' => 1, 'force_reserve_timeout' => 1];
+$cfg = ['persistent' => true, 'host' => '127.0.0.1', 'port' => 11300, 'timeout' => 1, 'stream_timeout' => 1, 'force_reserve_timeout' => 1];
 $act = isset($argv[1]) ? $argv[1] : '';
 $acts = [
-    'conn_timeout0'                     => ['test_conn',     [array_merge($cfg, ['connect_timeout' => 0])                               , 'tester', 0]         ], 
-    'conn_timeout1'                     => ['test_conn',     [$cfg                                                                      , 'tester', 1]         ], 
-    'streamTimeout-1_putBig'            => ['test_put',      [array_merge($cfg, ['stream_timeout' =>-1])                                , 'tester', 65520]     ], 
-    'streamTimeout-1_reserve_timeout0'  => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>-1, 'force_reserve_timeout' => 0])  , 'tester', 0]         ], 
-    'streamTimeout-1_reserve_timeout1'  => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>-1, 'force_reserve_timeout' => 0])  , 'tester', 1]         ], 
-    'streamTimeout0_putBig'             => ['test_put',      [array_merge($cfg, ['stream_timeout' => 0])                                , 'tester', 65520]     ], 
-    'streamTimeout1_putBig'             => ['test_put',      [array_merge($cfg, ['stream_timeout' => 1])                                , 'tester', 65520]     ], 
-    'streamTimeout1_reserve_timeout0'   => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>1, 'force_reserve_timeout' => 0])  , 'tester', 0]         ], 
-    'streamTimeout1_reserve_timeout1'   => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>1, 'force_reserve_timeout' => 0])  , 'tester', 1]         ], 
-    'del'                               => ['test_del',      [$cfg                                                                      , 'tester']            ], 
+    'conn_timeout0'                     => ['test_conn',     [array_merge($cfg, ['timeout' => 0])                                       , 'tester', 0]         ],
+    'conn_timeout1'                     => ['test_conn',     [$cfg                                                                      , 'tester', 1]         ],
+    'streamTimeout-1_putBig'            => ['test_put',      [array_merge($cfg, ['stream_timeout' =>-1])                                , 'tester', 65520]     ],
+    'streamTimeout-1_reserve_timeout0'  => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>-1, 'force_reserve_timeout' => 0])  , 'tester', 0]         ],
+    'streamTimeout-1_reserve_timeout1'  => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>-1, 'force_reserve_timeout' => 0])  , 'tester', 1]         ],
+    'streamTimeout0_putBig'             => ['test_put',      [array_merge($cfg, ['stream_timeout' => 0])                                , 'tester', 65520]     ],
+    'streamTimeout1_putBig'             => ['test_put',      [array_merge($cfg, ['stream_timeout' => 1])                                , 'tester', 65520]     ],
+    'streamTimeout1_reserve_timeout0'   => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>1, 'force_reserve_timeout' => 0])   , 'tester', 0]         ],
+    'streamTimeout1_reserve_timeout1'   => ['test_reserve',  [array_merge($cfg, ['stream_timeout' =>1, 'force_reserve_timeout' => 0])   , 'tester', 1]         ],
+    'del'                               => ['test_del',      [$cfg                                                                      , 'tester']            ],
     'sleepPut2_100'                     => ['test_sleepPut', [$cfg                                                                      , 'tester', 100,  300] ],
     'sleepPut2_1000'                    => ['test_sleepPut', [$cfg                                                                      , 'tester', 1000, 300] ],
 ];

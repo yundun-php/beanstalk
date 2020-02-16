@@ -58,6 +58,7 @@ class Client {
      * @var array
      */
     protected $_errors = array();
+    protected $_lastError = "";
 
     /**
      * 网络连续错误次数, 用于检测网络异常, 超过指定次数，则抛异常，程序中断
@@ -124,6 +125,7 @@ class Client {
      * @return boolean `true` if the connection was established, `false` otherwise.
      */
     public function connect() {
+        $this->_lastError = "";
         if (isset($this->_connection)) {
             $this->disconnect();
         }
@@ -156,6 +158,7 @@ class Client {
      * @return boolean `true` if diconnecting was successful.
      */
     public function disconnect() {
+        $this->_lastError = "";
         if (!is_resource($this->_connection)) {
             $this->connected = false;
         } else {
@@ -173,6 +176,7 @@ class Client {
      * @return boolean true/false
      */
     public function reconnect() {
+        $this->_lastError = "";
         $this->disconnect();
         $this->connect();
         $stats = $this->stats();
@@ -183,6 +187,7 @@ class Client {
      * 设置网络连续错误最大次数
      */
     public function setMaxNetError($maxNetError = 5000) {
+        $this->_lastError = "";
         $this->_max_netError = $maxNetError;
     }
 
@@ -201,7 +206,7 @@ class Client {
      * @return string
      */
     public function lastError() {
-        return current($this->_errors);
+        return $this->_lastError;
     }
 
     /**
@@ -212,6 +217,7 @@ class Client {
      * @return void
      */
     protected function _error($message) {
+        $this->_lastError = $message;
         if (count($this->_errors) >= 200) {
             array_shift($this->_errors);
         }
@@ -235,6 +241,7 @@ class Client {
         $result = fwrite($this->_connection, $data, $dataLen);
         //网络写入失败，直接异常
         if($dataLen != $result) {
+            $this->_error("Beanstalk net write failed, write len: {$dataLen}, ok len: {$result}");
             trigger_error("Beanstalk net write failed, write len: {$dataLen}, ok len: {$result}", E_USER_WARNING);
             throw new BeanstalkException("Beanstalk net write failed, write len: {$dataLen}, ok len: {$result}");
         }
@@ -272,6 +279,7 @@ class Client {
         if($packet == "") {
             $this->_count_readError++;
             if($this->_count_readError > $this->_max_netError) {
+                $this->_error("Beanstalk net error over {$this->_max_netError}");
                 trigger_error("Beanstalk net error over {$this->_max_netError}", E_USER_WARNING);
                 throw new BeanstalkException("Beanstalk net error over {$this->_max_netError}");
             }
@@ -309,6 +317,7 @@ class Client {
      *         the job id.
      */
     public function put($pri, $delay, $ttr, $data) {
+        $this->_lastError = "";
         $this->_write(sprintf("put %d %d %d %d\r\n%s", $pri, $delay, $ttr, strlen($data), $data));
         $status = strtok($this->_read(), ' ');
 
@@ -338,6 +347,7 @@ class Client {
      * @return string|boolean `false` on error otherwise the name of the tube.
      */
     public function choose($tube) {
+        $this->_lastError = "";
         $this->_write(sprintf('use %s', $tube));
         $status = strtok($this->_read(), ' ');
 
@@ -395,6 +405,7 @@ class Client {
      *         and body.
      */
     public function reserve($timeout = null) {
+        $this->_lastError = "";
         $timeout = intval($timeout);
         // reserve 命令有死循环的bug, 这里只可以使用timeout方式
         // 强制 reserve 使用 timeout 设置
@@ -438,6 +449,7 @@ class Client {
      * @return boolean `false` on error, `true` on success.
      */
     public function delete($id) {
+        $this->_lastError = "";
         $cmd = "delete";
         $this->_write(sprintf('%s %d', $cmd, $id));
         $status = $this->_read();
@@ -463,6 +475,7 @@ class Client {
      * @return boolean `false` on error, `true` on success.
      */
     public function release($id, $pri, $delay) {
+        $this->_lastError = "";
         $cmd = "release";
         $this->_write(sprintf('%s %d %d %d', $cmd, $id, $pri, $delay));
         $status = $this->_read();
@@ -489,6 +502,7 @@ class Client {
      * @return boolean `false` on error, `true` on success.
      */
     public function bury($id, $pri) {
+        $this->_lastError = "";
         $cmd = "bury";
         $this->_write(sprintf('%s %d %d', $cmd, $id, $pri));
         $status = $this->_read();
@@ -512,6 +526,7 @@ class Client {
      * @return boolean `false` on error, `true` on success.
      */
     public function touch($id) {
+        $this->_lastError = "";
         $cmd = "touch";
         $this->_write(sprintf('%s %d', $cmd, $id));
         $status = $this->_read();
@@ -536,6 +551,7 @@ class Client {
      * @return integer|boolean `false` on error otherwise number of tubes in watch list.
      */
     public function watch($tube) {
+        $this->_lastError = "";
         $cmd = "watch";
         $this->_write(sprintf('%s %s', $cmd, $tube));
         $status = strtok($this->_read(), ' ');
@@ -557,6 +573,7 @@ class Client {
      * @return integer|boolean `false` on error otherwise number of tubes in watch list.
      */
     public function ignore($tube) {
+        $this->_lastError = "";
         $cmd = "ignore";
         $this->_write(sprintf('%s %s', $cmd, $tube));
         $status = strtok($this->_read(), ' ');
@@ -582,6 +599,7 @@ class Client {
      * @return string|boolean `false` on error otherwise the body of the job.
      */
     public function peek($id) {
+        $this->_lastError = "";
         $cmd = "peek";
         $this->_write(sprintf('%s %d', $cmd, $id));
         return $this->_peekRead($cmd);
@@ -593,6 +611,7 @@ class Client {
      * @return string|boolean `false` on error otherwise the body of the job.
      */
     public function peekReady() {
+        $this->_lastError = "";
         $cmd = "peek-ready";
         $this->_write($cmd);
         return $this->_peekRead($cmd);
@@ -604,6 +623,7 @@ class Client {
      * @return string|boolean `false` on error otherwise the body of the job.
      */
     public function peekDelayed() {
+        $this->_lastError = "";
         $cmd = "peek-delayed";
         $this->_write($cmd);
         return $this->_peekRead($cmd);
@@ -615,6 +635,7 @@ class Client {
      * @return string|boolean `false` on error otherwise the body of the job.
      */
     public function peekBuried() {
+        $this->_lastError = "";
         $cmd = "peek-buried";
         $this->_write($cmd);
         return $this->_peekRead($cmd);
@@ -653,6 +674,7 @@ class Client {
      * @return integer|boolean False on error otherwise number of job kicked.
      */
     public function kick($bound) {
+        $this->_lastError = "";
         $cmd = "kick";
         $this->_write(sprintf('%s %d', $cmd, $bound));
         $status = strtok($this->_read(), ' ');
@@ -676,6 +698,7 @@ class Client {
      * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary
      */
     public function statsJob($id) {
+        $this->_lastError = "";
         $cmd = "stats-job";
         $this->_write(sprintf('%s %d', $cmd, $id));
         return $this->_statsRead($cmd);
@@ -688,6 +711,7 @@ class Client {
      * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
      */
     public function statsTube($tube) {
+        $this->_lastError = "";
         $cmd = "stats-tube";
         $this->_write(sprintf('%s %s', $cmd, $tube));
         return $this->_statsRead($cmd);
@@ -699,6 +723,7 @@ class Client {
      * @return string|boolean `false` on error otherwise a string with a yaml formatted dictionary.
      */
     public function stats() {
+        $this->_lastError = "";
         $cmd = "stats";
         $this->_write($cmd);
         return $this->_statsRead($cmd);
@@ -710,6 +735,7 @@ class Client {
      * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
      */
     public function listTubes() {
+        $this->_lastError = "";
         $cmd = "list-tubes";
         $this->_write($cmd);
         return $this->_statsRead($cmd);
@@ -721,6 +747,7 @@ class Client {
      * @return string|boolean `false` on error otherwise a string with the name of the tube.
      */
     public function listTubeUsed() {
+        $this->_lastError = "";
         $cmd = "list-tube-used";
         $this->_write($cmd);
         $status = strtok($this->_read(), ' ');
@@ -751,6 +778,7 @@ class Client {
      * @return string|boolean `false` on error otherwise a string with a yaml formatted list.
      */
     public function listTubesWatched() {
+        $this->_lastError = "";
         $cmd = "list-tubes-watched";
         $this->_write($cmd);
         return $this->_statsRead($cmd);

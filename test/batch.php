@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 //require './src/phpbeanstalk/Client.php';
 require './vendor/autoload.php';
-use Jingwu\PhpBeanstalk\Client;
+use Yd\Beanstalk\Client;
 
 //网络连通及不通
 //阻断网络：iptables -A OUTPUT -p tcp --sport 11300 -j DROP

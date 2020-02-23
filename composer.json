@@ -1,8 +1,8 @@
 {
-    "name": "jingwu/phpbeanstalk",
+    "name": "yd/beanstalk",
     "description": "beanstalkd轻量级的PHP客户端.",
     "keywords": ["queue", "socket", "beanstalk"],
-    "homepage": "https://github.com/jingwu15/phpbeanstalk.git",
+    "homepage": "https://github.com/yundun-php/beanstalk.git",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Jingwu\\PhpBeanstalk\\": "src/phpbeanstalk/"
+            "Yd\\Beanstalk\\": "src/beanstalk/"
         }
     },
     "require": {

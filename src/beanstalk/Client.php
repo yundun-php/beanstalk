@@ -1,5 +1,5 @@
 <?php
-namespace Jingwu\PhpBeanstalk;
+namespace Yd\Beanstalk;
 
 /**
  * beanstalk: A minimalistic PHP beanstalk client.

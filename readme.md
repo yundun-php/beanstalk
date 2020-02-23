@@ -30,11 +30,11 @@ Versions & Requirements
 
 Usage
 -----
-Add ``jingwu/phpbeanstalk`` as a dependency in your project's ``composer.json`` file (change version to suit your version of Elasticsearch):
+Add ``yd/beanstalk`` as a dependency in your project's ``composer.json`` file (change version to suit your version of Elasticsearch):
 ```json
     {
         "require": {
-            "jingwu/phpbeanstalk": "0.1.6"
+            "yd/beanstalk": "0.1.0"
         }
     }
 ```
@@ -42,7 +42,7 @@ Add ``jingwu/phpbeanstalk`` as a dependency in your project's ``composer.json`` 
 ```
 <?php
 require 'vendor/autoload.php';
-use Jingwu\PhpBeanstalk\Client;
+use Yd\Beanstalk\Client;
 
 $cfg = [
     'persistent' => true, 

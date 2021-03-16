@@ -34,7 +34,7 @@ Add ``yd/beanstalk`` as a dependency in your project's ``composer.json`` file (c
 ```json
     {
         "require": {
-            "yd/beanstalk": "0.1.0"
+            "yd/beanstalk": "0.1.1"
         }
     }
 ```

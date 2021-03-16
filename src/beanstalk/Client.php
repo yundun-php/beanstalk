@@ -81,9 +81,8 @@ class Client {
      *                  0 不设限制, 走系统默认配置
      *                  1 默认
      *        - `'stream_timeout'`  数据流超时设置
-     *                 -1 不限制, 一直等待服务器响应
+     *                 -1 不限制, 一直等待服务器响应, 默认
      *                  0 不等待服务处理，直接返回，此值有极大风险，不可在业务中使用
-     *                  1 默认
      *        - `'force_reserve_timeout'`  强制 reserve 命令使用 timeout 设置
      *                  reserve 命令有死循环的bug, 为了避免这个问题，提供强制 timeout 的设置
      *                  0 不强制
@@ -96,7 +95,7 @@ class Client {
             'host'                  => '127.0.0.1',
             'port'                  => 11300,
             'timeout'               => 1,
-            'stream_timeout'        => 1,
+            'stream_timeout'        => -1,
             'force_reserve_timeout' => 1,
         );
         $this->_config = $config + $default;

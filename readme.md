@@ -49,7 +49,7 @@ $cfg = [
     'host' => '127.0.0.1', 
     'port' => 11300, 
     'timeout' => 1,                 //连接超时设置
-    'stream_timeout' => 1,          //数据流超时设置
+    //'stream_timeout' => -1,       //数据流超时设置, 默认-1，不超时
     'force_reserve_timeout' => 1,   //强制 reserve 设置超时，默认1秒
 ];
 $client = new Client($cfg);
@@ -110,3 +110,7 @@ $ cd /path/to/beanstalk/src
 $ phpunit -c ../phpunit.xml
 
 [1] http://www.phpunit.de/manual/current/en/installation.html
+
+更新日志
+------------------
+* 20210316 添加stream_timeout, 改为默认-1, 不做超时限制, 这是为了解决消费的同时发送队列产生的异常问题
